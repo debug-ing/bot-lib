@@ -428,7 +428,6 @@ func (bot *BotAPI) GetUpdates(config UpdateConfig) ([]Update, error) {
 		if err != nil {
 			return []Update{}, err
 		}
-
 		v.Add("allowed_updates", string(allowedUpdates))
 	}
 

@@ -383,14 +383,10 @@ func NewUserProfilePhotos(userID int) UserProfilePhotosConfig {
 func NewUpdate(offset, limit, timeout int, allowedUpdated []string) UpdateConfig {
 	if len(allowedUpdated) == 0 {
 		return UpdateConfig{
-			Offset:  offset,
-			Limit:   0,
-			Timeout: 0,
-			AllowedUpdates: []string{
-				"chat_member",
-				"message_reaction",
-				"message_reaction_count",
-			},
+			Offset:         offset,
+			Limit:          limit,
+			Timeout:        timeout,
+			AllowedUpdates: []string{},
 		}
 	}
 	return UpdateConfig{
