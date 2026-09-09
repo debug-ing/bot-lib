@@ -1,8 +1,9 @@
 package tgbotapi_test
 
 import (
-	"github.com/ghiac/bale-bot-api"
 	"testing"
+
+	tgbotapi "github.com/debug-ing/bot-lib"
 )
 
 func TestNewInlineQueryResultArticle(t *testing.T) {

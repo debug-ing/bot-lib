@@ -380,11 +380,24 @@ func NewUserProfilePhotos(userID int) UserProfilePhotosConfig {
 //
 // offset is the last Update ID to include.
 // You likely want to set this to the last Update ID plus 1.
-func NewUpdate(offset int) UpdateConfig {
+func NewUpdate(offset int, allowedUpdated []string) UpdateConfig {
+	if len(allowedUpdated) == 0 {
+		return UpdateConfig{
+			Offset:  offset,
+			Limit:   0,
+			Timeout: 0,
+			AllowedUpdates: []string{
+				"chat_member",
+				"message_reaction",
+				"message_reaction_count",
+			},
+		}
+	}
 	return UpdateConfig{
-		Offset:  offset,
-		Limit:   0,
-		Timeout: 0,
+		Offset:         offset,
+		Limit:          0,
+		Timeout:        0,
+		AllowedUpdates: allowedUpdated,
 	}
 }
 

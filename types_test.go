@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ghiac/bale-bot-api"
+	tgbotapi "github.com/debug-ing/bot-lib"
 )
 
 func TestUserStringWith(t *testing.T) {

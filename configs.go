@@ -949,9 +949,10 @@ type FileConfig struct {
 
 // UpdateConfig contains information about a GetUpdates request.
 type UpdateConfig struct {
-	Offset  int
-	Limit   int
-	Timeout int
+	Offset         int
+	Limit          int
+	Timeout        int
+	AllowedUpdates []string
 }
 
 // WebhookConfig contains information about a SetWebhook request.
