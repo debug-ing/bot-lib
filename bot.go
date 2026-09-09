@@ -423,6 +423,15 @@ func (bot *BotAPI) GetUpdates(config UpdateConfig) ([]Update, error) {
 		v.Add("timeout", strconv.Itoa(config.Timeout))
 	}
 
+	if len(config.AllowedUpdates) > 0 {
+		allowedUpdates, err := json.Marshal(config.AllowedUpdates)
+		if err != nil {
+			return []Update{}, err
+		}
+
+		v.Add("allowed_updates", string(allowedUpdates))
+	}
+
 	resp, err := bot.MakeRequest("getUpdates", v)
 	if err != nil {
 		return []Update{}, err
@@ -740,9 +749,9 @@ func (bot *BotAPI) UnbanChatMember(config ChatMemberConfig) (APIResponse, error)
 }
 
 // RestrictChatMember to restrict a user in a supergroup. The bot must be an
-//administrator in the supergroup for this to work and must have the
-//appropriate admin rights. Pass True for all boolean parameters to lift
-//restrictions from a user. Returns True on success.
+// administrator in the supergroup for this to work and must have the
+// appropriate admin rights. Pass True for all boolean parameters to lift
+// restrictions from a user. Returns True on success.
 func (bot *BotAPI) RestrictChatMember(config RestrictChatMemberConfig) (APIResponse, error) {
 	v := url.Values{}
 

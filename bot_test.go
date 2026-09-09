@@ -49,7 +49,7 @@ func TestNewBotAPI_notoken(t *testing.T) {
 func TestGetUpdates(t *testing.T) {
 	bot, _ := getBot(t)
 
-	u := tgbotapi.NewUpdate(0, []string{})
+	u := tgbotapi.NewUpdate(0, 0, 0, []string{})
 
 	_, err := bot.GetUpdates(u)
 
@@ -506,7 +506,7 @@ func TestSetWebhookWithoutCert(t *testing.T) {
 func TestUpdatesChan(t *testing.T) {
 	bot, _ := getBot(t)
 
-	var ucfg tgbotapi.UpdateConfig = tgbotapi.NewUpdate(0, []string{})
+	var ucfg tgbotapi.UpdateConfig = tgbotapi.NewUpdate(0, 0, 0, []string{})
 	ucfg.Timeout = 60
 	_, err := bot.GetUpdatesChan(ucfg)
 
@@ -540,7 +540,7 @@ func ExampleNewBotAPI() {
 
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
-	u := tgbotapi.NewUpdate(0, []string{})
+	u := tgbotapi.NewUpdate(0, 0, 0, []string{})
 	u.Timeout = 60
 
 	updates, err := bot.GetUpdatesChan(u)
@@ -601,7 +601,7 @@ func ExampleAnswerInlineQuery() {
 
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
-	u := tgbotapi.NewUpdate(0, []string{})
+	u := tgbotapi.NewUpdate(0, 0, 0, []string{})
 	u.Timeout = 60
 
 	updates, err := bot.GetUpdatesChan(u)

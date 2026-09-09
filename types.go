@@ -37,6 +37,32 @@ type Update struct {
 	CallbackQuery      *CallbackQuery      `json:"callback_query,omitempty"`
 	ShippingQuery      *ShippingQuery      `json:"shipping_query,omitempty"`
 	PreCheckoutQuery   *PreCheckoutQuery   `json:"pre_checkout_query,omitempty"`
+	ChatMember         *ChatMemberUpdated  `json:"chat_member,omitempty"`
+	MyChatMember       *ChatMemberUpdated  `json:"my_chat_member,omitempty"`
+}
+
+// ChatMemberUpdated
+type ChatMemberUpdated struct {
+	Chat                    Chat            `json:"chat"`
+	From                    User            `json:"from"`
+	Date                    int             `json:"date"`
+	OldChatMember           ChatMember      `json:"old_chat_member"`
+	NewChatMember           ChatMember      `json:"new_chat_member"`
+	InviteLink              *ChatInviteLink `json:"invite_link,omitempty"`
+	ViaJoinRequest          bool            `json:"via_join_request,omitempty"`
+	ViaChatFolderInviteLink bool            `json:"via_chat_folder_invite_link,omitempty"`
+}
+
+type ChatInviteLink struct {
+	InviteLink              string `json:"invite_link"`
+	Creator                 User   `json:"creator"`
+	CreatesJoinRequest      bool   `json:"creates_join_request"`
+	IsPrimary               bool   `json:"is_primary"`
+	IsRevoked               bool   `json:"is_revoked"`
+	Name                    string `json:"name,omitempty"`
+	ExpireDate              int    `json:"expire_date,omitempty"`
+	MemberLimit             int    `json:"member_limit,omitempty"`
+	PendingJoinRequestCount int    `json:"pending_join_request_count,omitempty"`
 }
 
 // UpdatesChannel is the channel for getting updates.

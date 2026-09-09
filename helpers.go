@@ -380,7 +380,7 @@ func NewUserProfilePhotos(userID int) UserProfilePhotosConfig {
 //
 // offset is the last Update ID to include.
 // You likely want to set this to the last Update ID plus 1.
-func NewUpdate(offset int, allowedUpdated []string) UpdateConfig {
+func NewUpdate(offset, limit, timeout int, allowedUpdated []string) UpdateConfig {
 	if len(allowedUpdated) == 0 {
 		return UpdateConfig{
 			Offset:  offset,
@@ -395,8 +395,8 @@ func NewUpdate(offset int, allowedUpdated []string) UpdateConfig {
 	}
 	return UpdateConfig{
 		Offset:         offset,
-		Limit:          0,
-		Timeout:        0,
+		Limit:          limit,
+		Timeout:        timeout,
 		AllowedUpdates: allowedUpdated,
 	}
 }
@@ -824,5 +824,51 @@ func NewSetChatPhotoShare(chatID int64, fileID string) SetChatPhotoConfig {
 			FileID:      fileID,
 			UseExisting: true,
 		},
+	}
+}
+
+// GetMemberStatus checks whether a chat member has joined or left.
+//
+// It returns:
+//   - true  if the user has joined the chat.
+//   - false if the user has left the chat.
+//   - nil   if the update is not related to a join or leave event,
+//     such as a role/status change or an unrelated update.
+//
+// The result is determined by comparing the user's previous and
+// current membership status in the ChatMemberUpdated object.
+func GetMemberStatus(update Update) *bool {
+	if update.ChatMember == nil {
+		return nil
+	}
+
+	oldMember := isMember(update.ChatMember.OldChatMember.Status)
+	newMember := isMember(update.ChatMember.NewChatMember.Status)
+
+	// Joined
+	if !oldMember && newMember {
+		result := true
+		return &result
+	}
+
+	// Left
+	if oldMember && !newMember {
+		result := false
+		return &result
+	}
+
+	// No change in membership
+	return nil
+}
+
+func isMember(status string) bool {
+	switch status {
+	case "creator",
+		"administrator",
+		"member",
+		"restricted":
+		return true
+	default:
+		return false
 	}
 }
